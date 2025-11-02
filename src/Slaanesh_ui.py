@@ -421,17 +421,17 @@ def panel_overview():
                 ui.label('Yearly stats').classes('text-xl font-bold')
             with ui.row().classes('w-full'):
                 graph_data = []
-                list_years = [str(x) for x in range(dt.datetime.now().year, dt.datetime.now().year-7, -1)]
+                list_years = [str(x) for x in range(dt.datetime.now().year, dt.datetime.now().year-4, -1)]
                 list_years.append(str(dt.datetime.now().year-7) + "\nand\nbefore")
                 for status in config.config_dictionary['played']:
                     yearly_data = []
-                    for year in range(dt.datetime.now().year, dt.datetime.now().year-7, -1):
+                    for year in range(dt.datetime.now().year, dt.datetime.now().year-4, -1):
                         a = res['Date'] >= dt.datetime(year, 1, 1)
                         b = res['Date'] < dt.datetime(year + 1, 1, 1)
                         tmp = res.loc[a & b, 'Status']
                         count = sum(tmp.isin([str(status)]))
                         yearly_data.append(count)
-                    b = res['Date'] < dt.datetime(dt.datetime.now().year-6, 1, 1)
+                    b = res['Date'] < dt.datetime(dt.datetime.now().year-3, 1, 1)
                     yearly_data.append(sum(res.loc[b, 'Status'].isin([str(status)])))
                     graph_data.append({'type': 'bar', 'name': status, 'data': yearly_data,
                                        'label': {'normal': {'show': True, 'position': 'right',
@@ -860,3 +860,4 @@ def action_match_ids_to_names(names: str):
         ui.notify('Name-to-ID list export not successful: ' + str(e))
         return
     ui.notify('Name-to-ID list successfully exported')
+
